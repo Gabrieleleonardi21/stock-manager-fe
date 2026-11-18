@@ -13,6 +13,9 @@ const TIPI = [
   { tipo: "prelievo", label: "↑ Prelievo" },
 ] as const;
 
+// etichetta del prezzo: costo per gli arrivi, prezzo di vendita per i prelievi
+const ETICHETTA_PREZZO = { arrivo: "Prezzo acquisto €", prelievo: "Prezzo vendita €" } as const;
+
 // variante del bottone "Registra" per tipo di movimento
 const BOTTONE = { arrivo: "ok", prelievo: "primary" } as const;
 
@@ -56,9 +59,7 @@ export function MovimentoForm({ unita, guest, onAdd }: {
       <div className="grid-form top-gap">
         <Input label="Data" type="date" value={d.data} onChange={(e) => setD({ ...d, data: e.target.value })} />
         <Input label={`Quantità (${unita})`} type="number" min={0} step="any" value={d.qta} onChange={(e) => setD({ ...d, qta: e.target.value })} />
-        {d.tipo === "arrivo" && (
-          <Input label="Prezzo unit. €" type="number" min={0} step="any" value={d.prezzo} onChange={(e) => setD({ ...d, prezzo: e.target.value })} placeholder="0,00" />
-        )}
+        <Input label={ETICHETTA_PREZZO[d.tipo]} type="number" min={0} step="any" value={d.prezzo} onChange={(e) => setD({ ...d, prezzo: e.target.value })} placeholder="0,00" />
       </div>
       <div className="top-gap">
         <Input label="Nota (fornitore, lotto, destinazione…)" value={d.nota} onChange={(e) => setD({ ...d, nota: e.target.value })} />

@@ -12,6 +12,8 @@ interface ReportApi {
   totArrivi: number;
   totPrelievi: number;
   totValoreAcquisti: number;
+  totEntrate: number;
+  totRisultato: number;
   righe: ReportRow[];
 }
 
@@ -24,6 +26,8 @@ interface SintesiApi {
   totArrivi: number;
   totPrelievi: number;
   totValoreAcquisti: number;
+  totEntrate: number;
+  totRisultato: number;
 }
 
 /** Il server non restituisce magazzinoId e ts: il tipo del client li ha, ma non servono qui. */
@@ -31,7 +35,7 @@ function daApi(r: ReportApi): ReportMensile {
   return {
     id: r.id, magazzinoId: "", magazzinoNome: r.magazzinoNome, azienda: r.azienda, mese: r.mese,
     righe: r.righe, totValoreAcquisti: r.totValoreAcquisti, totArrivi: r.totArrivi,
-    totPrelievi: r.totPrelievi, autore: r.autore, ts: 0,
+    totPrelievi: r.totPrelievi, totEntrate: r.totEntrate, totRisultato: r.totRisultato, autore: r.autore, ts: 0,
   };
 }
 

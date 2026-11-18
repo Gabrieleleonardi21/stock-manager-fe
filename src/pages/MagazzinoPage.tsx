@@ -9,6 +9,7 @@ import { Kpi } from "../components/ui/Kpi";
 import { Button } from "../components/ui/Button";
 import { Input } from "../components/ui/Input";
 import { valoreGiacenza } from "../utils/giacenza";
+import { economiaMagazzino } from "../utils/economia";
 import { analizzaScorta, type StatoScorta } from "../utils/riordino";
 import { fmtEuro, fmtNum } from "../utils/fmt";
 import { cx } from "../utils/cx";
@@ -42,6 +43,7 @@ export function MagazzinoPage() {
   const allerta = m.oggetti.filter((o) => IN_ALLERTA.includes(statoDi(o)));
   const valore = m.oggetti.reduce((t, o) => t + valoreGiacenza(o), 0);
   const movimenti = m.oggetti.reduce((t, o) => t + o.movimenti.length, 0);
+  const economia = economiaMagazzino(m);
   const openObj = m.oggetti.find((o) => o.id === openOid);
 
   // filtro per stato e ricerca per nome o SKU, combinati
@@ -70,7 +72,9 @@ export function MagazzinoPage() {
         <Kpi label="Articoli" value={fmtNum(m.oggetti.length)} delay={0} />
         <Kpi label="Valore magazzino" value={fmtEuro(valore)} delay={80} />
         <Kpi label="Da riordinare" value={fmtNum(allerta.length)} alert={allerta.length > 0} delay={160} />
-        <Kpi label="Movimenti" value={fmtNum(movimenti)} delay={240} />
+        <Kpi label="Uscite (acquisti)" value={fmtEuro(economia.uscite)} delay={240} />
+        <Kpi label="Entrate (vendite)" value={fmtEuro(economia.entrate)} delay={280} />
+        <Kpi label="Risultato" value={fmtEuro(economia.risultato)} alert={economia.risultato < 0} ok={economia.risultato >= 0} delay={320} />
       </div>
 
       {allerta.length > 0 && (

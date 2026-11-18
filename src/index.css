@@ -207,6 +207,7 @@ body {
 .kpi-value { margin-top: 10px; font-family: var(--font-disp); font-size: 26px; line-height: 1; font-variant-numeric: tabular-nums; }
 .kpi-alert { border-color: rgba(248, 113, 113, 0.45); }
 .kpi-alert .kpi-value { color: var(--err); }
+.kpi-ok .kpi-value { color: var(--ok); }
 
 /* ── badge stato scorta ── */
 .badge { display: inline-flex; align-items: center; gap: 7px; padding: 5px 10px; border-radius: 999px; font: 800 11px/1 var(--font-ui); letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap; }

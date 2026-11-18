@@ -24,9 +24,9 @@ function messaggio(e: unknown): string {
   return "Operazione non riuscita, riprova.";
 }
 
-/** Prezzo d'acquisto del form: solo per gli arrivi, mai negativo. */
+/** Prezzo del form (costo per gli arrivi, vendita per i prelievi): facoltativo, mai negativo. */
 function prezzoDi(d: MovimentoDraft): number | null {
-  if (d.tipo !== "arrivo" || d.prezzo === "") return null;
+  if (d.prezzo === "") return null;
   return Math.max(0, Number(d.prezzo));
 }
 

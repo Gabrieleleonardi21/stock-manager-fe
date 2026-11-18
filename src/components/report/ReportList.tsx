@@ -1,4 +1,5 @@
 import { Loading } from "../ui/Loading";
+import { cx } from "../../utils/cx";
 import { meseLabel, fmtEuro, fmtNum } from "../../utils/fmt";
 import type { ReportMensile } from "../../types";
 
@@ -20,7 +21,8 @@ export function ReportList({ reports, onOpen }: { reports: ReportMensile[] | nul
               <span className="muted item-sub">{[r.azienda, r.magazzinoNome].filter(Boolean).join(" · ")}</span>
             </span>
             <span className="item-meta">
-              <span className="pos">+{fmtNum(r.totArrivi)}</span> / <span className="neg">−{fmtNum(r.totPrelievi)}</span> · {fmtEuro(r.totValoreAcquisti)}
+              <span className="pos">+{fmtNum(r.totArrivi)}</span> / <span className="neg">−{fmtNum(r.totPrelievi)}</span> · risultato{" "}
+              <span className={cx((r.totRisultato ?? 0) < 0 && "neg", (r.totRisultato ?? 0) >= 0 && "pos")}>{fmtEuro(r.totRisultato ?? 0)}</span>
             </span>
           </button>
         ))}

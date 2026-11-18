@@ -84,9 +84,10 @@ export function useAuth() {
 
   const enterGuest = () => { setAzienda("", []); setUser({ name: "Ospite", guest: true }); };
 
-  const logout = async () => {
-    await authService.logout();
+  // si esce subito dallo stato locale; la chiusura della sessione sul server parte in background
+  const logout = () => {
     reset();
+    void authService.logout();
   };
 
   return { user, ripristina, register, login, enterGuest, logout, importaDatiLocali, scartaDatiLocali };

@@ -10,7 +10,8 @@ export interface ReportRow {
   arrivi: number;
   prelievi: number;
   giacenzaFinale: number;
-  valoreAcquisti: number;   // somma (qta * prezzo) degli arrivi del mese
+  valoreAcquisti: number;   // uscite: somma (qta * prezzo) degli arrivi del mese
+  entrate?: number;         // entrate: somma (qta * prezzo di vendita) dei prelievi del mese
 }
 
 /** Report mensile di un magazzino, archiviabile e condivisibile */
@@ -24,6 +25,8 @@ export interface ReportMensile {
   totValoreAcquisti: number;
   totArrivi: number;
   totPrelievi: number;
+  totEntrate?: number;      // entrate del mese
+  totRisultato?: number;    // entrate meno uscite (positivo = guadagno)
   autore: string;
   ts: number;
 }
