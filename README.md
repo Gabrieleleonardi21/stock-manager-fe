@@ -1,3 +1,5 @@
+> **Materiale di Gabriele Leonardi.** Tutti i diritti riservati, vedi [LICENSE](LICENSE).
+
 # STOCK MANAGER — frontend
 
 Interfaccia React 19 + TypeScript + Vite per il gestionale di magazzino.
