@@ -39,5 +39,8 @@ export function useAssistantAI() {
     }
   };
 
-  return { msgs, loading, send };
+  /** Svuota la conversazione ("Nuova chat"). Chiudere la chat invece non la cancella. */
+  const reset = () => setMsgs([]);
+
+  return { msgs, loading, send, reset };
 }

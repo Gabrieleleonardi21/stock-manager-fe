@@ -1,14 +1,17 @@
 import { useState, type FormEvent } from "react";
-import { useAssistantAI } from "../../hooks/useAssistantAI";
+import type { useAssistantAI } from "../../hooks/useAssistantAI";
 import { Button } from "../ui/Button";
 import { Input } from "../ui/Input";
 
 // classe della bolla in base al ruolo di chi scrive
 const BOLLA = { user: "bubble-u", assistant: "bubble-a" } as const;
 
-/** Finestra di chat con l'assistente AI. `aria-live` fa leggere agli screen reader le risposte */
-export function AssistantPanel({ onClose }: { onClose: () => void }) {
-  const { msgs, loading, send } = useAssistantAI();
+/**
+ * Finestra della chat. La conversazione arriva dall'app: "Chiudi" nasconde soltanto il pannello,
+ * "Nuova chat" svuota la conversazione. `aria-live` fa leggere agli screen reader le risposte.
+ */
+export function AssistantPanel({ chat, onClose }: { chat: ReturnType<typeof useAssistantAI>; onClose: () => void }) {
+  const { msgs, loading, send, reset } = chat;
   const [input, setInput] = useState("");
 
   const submit = (e: FormEvent) => {
@@ -22,7 +25,10 @@ export function AssistantPanel({ onClose }: { onClose: () => void }) {
     <div className="chatpanel" role="dialog" aria-label="Assistente magazzino">
       <div className="chat-head">
         <span>Assistente magazzino</span>
-        <button className="icon-btn" onClick={onClose} aria-label="Chiudi">×</button>
+        <div className="row-wrap">
+          <Button variant="ghost" small onClick={reset} disabled={loading || msgs.length === 0}>Nuova chat</Button>
+          <button className="icon-btn" onClick={onClose} aria-label="Chiudi (la conversazione resta)" title="Chiudi: la conversazione resta">×</button>
+        </div>
       </div>
       <div className="chat-body" aria-live="polite">
         {msgs.length === 0 && <p className="chat-empty muted">Chiedimi di scorte, riordini, valorizzazione del magazzino o come organizzare i movimenti.</p>}

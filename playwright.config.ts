@@ -4,6 +4,8 @@ import { defineConfig } from "@playwright/test";
 // Avvia il dev server da solo, oppure riusa quello già acceso.
 export default defineConfig({
   testDir: "tests/e2e",
+  // Un test alla volta: i test registrano utenti sullo stesso server, e BCrypt sotto carico rallenta le risposte
+  workers: 1,
   // Back-end reale: BCrypt (costo 12) e database remoto rendono le risposte piu' lente dei default
   timeout: 60_000,
   expect: { timeout: 20_000 },

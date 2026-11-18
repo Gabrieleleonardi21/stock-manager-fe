@@ -11,7 +11,7 @@ import { Input } from "../components/ui/Input";
 
 /** Pagina "Magazzini": nome dell'azienda, creazione di un magazzino ed elenco di quelli esistenti */
 export function AziendaPage() {
-  const { user, aziendaName, magazzini, setAziendaName, createMagazzino, salvaNomeAzienda } = useAzienda();
+  const { user, aziendaName, magazzini, setAziendaName, createMagazzino, salvaNomeAzienda, caricaDemo } = useAzienda();
   const datiLocali = useAppStore((s) => s.datiLocali);
   const { importaDatiLocali, scartaDatiLocali } = useAuth();
   const navigate = useNavigate();
@@ -38,6 +38,20 @@ export function AziendaPage() {
         push("Magazzino creato");
         navigate(`/azienda/magazzino/${m.id}`);
       }} />
+      {magazzini.length === 0 && user && !user.guest && (
+        <div className="card block-gap">
+          <p className="panel-title">Primi passi</p>
+          <p className="muted small">Carica un magazzino di prova con articoli e movimenti, per vedere subito come funziona.</p>
+          <Button variant="ok" small onClick={async () => {
+            try {
+              await caricaDemo();
+              push("Dati di prova caricati");
+            } catch {
+              push("Caricamento dei dati di prova non riuscito, riprova.", "err");
+            }
+          }}>Carica dati di prova</Button>
+        </div>
+      )}
       <section className="section">
         <div className="section-head">
           <h2 className="page-title">I tuoi magazzini</h2>

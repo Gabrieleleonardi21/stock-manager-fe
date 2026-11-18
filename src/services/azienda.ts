@@ -41,3 +41,7 @@ export const eliminaMovimento = (id: string) => api<void>(`/movimenti/${id}`, "D
 /** Import di un magazzino dal browser (idempotente: `chiave` e' l'id locale). */
 export const importaMagazzino = (payload: unknown) =>
   api<{ nuovo: boolean; magazzinoId: string }>("/import/magazzini", "POST", payload);
+
+/** Crea il magazzino di prova nell'account (idempotente: ripremere il pulsante non duplica). */
+export const caricaDatiDemo = () =>
+  api<{ nuovo: boolean; magazzinoId: string }>("/demo", "POST");

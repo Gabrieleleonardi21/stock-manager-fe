@@ -8,6 +8,7 @@ import { Toaster } from "./components/ui/Toaster";
 import { Loading } from "./components/ui/Loading";
 import { useAuth } from "./hooks/useAuth";
 import { useAppStore } from "./stores/useAppStore";
+import { useAssistantAI } from "./hooks/useAssistantAI";
 import { HomePage } from "./pages/HomePage";
 import { AziendaPage } from "./pages/AziendaPage";
 import { MagazzinoPage } from "./pages/MagazzinoPage";
@@ -20,6 +21,8 @@ export default function App() {
   const authChecked = useAppStore((s) => s.authChecked);
   const { ripristina } = useAuth();
   const [aiOpen, setAiOpen] = useState(false);
+  // la conversazione vive qui: chiudere il pannello non la cancella
+  const chat = useAssistantAI();
   // al primo caricamento (anche dopo F5) ripristina la sessione dal server
   useEffect(() => { ripristina(); }, []);
   return (
@@ -41,7 +44,7 @@ export default function App() {
           </Routes>}
         </main>
       </div>
-      {aiOpen && <AssistantPanel onClose={() => setAiOpen(false)} />}
+      {aiOpen && <AssistantPanel chat={chat} onClose={() => setAiOpen(false)} />}
       <AssistantFAB onClick={() => setAiOpen((o) => !o)} />
       <Toaster />
     </BrowserRouter>

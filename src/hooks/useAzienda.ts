@@ -34,5 +34,12 @@ export function useAzienda() {
     if (user && !user.guest) await remoto.rinominaAzienda(aziendaName.trim());
   };
 
-  return { user, aziendaName, magazzini, setAziendaName, createMagazzino, salvaNomeAzienda };
+  /** Crea i dati di prova e ricarica l'albero dal server. */
+  const caricaDemo = async () => {
+    await remoto.caricaDatiDemo();
+    const albero = await remoto.caricaAzienda();
+    useAppStore.getState().setAzienda(albero.nome, albero.magazzini);
+  };
+
+  return { user, aziendaName, magazzini, setAziendaName, createMagazzino, salvaNomeAzienda, caricaDemo };
 }
